@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Galada&family=Pacifico&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: "Galada", cursive;
+            font-weight: 400;
+            font-style: normal;
+            user-select: none;
+        }
+        body {
+            transition: opacity 1s ease-out;
+        }
+        .fade-out {
+            opacity: 0;
+        }
+        #bg{
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background: green;
+            transition: 2s;
+        }
+        #circle{
+            overflow: hidden;
+            height: 200px;
+            width: 200px;
+            border-radius: 50%;
+            background-color: red;
+        }
+        img {
+            opacity: 0;
+            height: 200px;
+            width: 200px;
+            transition: 1.5s;
+            filter: brightness(2);
+        }
+        p{
+            color: white;
+            font-size: 5em;
+            transition: 1.8s;
+        } 
+        #hint{
+            transition: 1s;
+            color: white;
+        }
+        #btn{
+            color: #111;
+            text-decoration: none;
+            font-family: "Pacifico", cursive;
+            font-weight: 400;
+            font-style: normal;
+            padding: 8px 35px;
+            font-size: 2em;
+            border: 2px solid #fff ;
+            border-radius: 1.2rem;
+            box-shadow: 2px 2px 8px #111;
+            background: #fff;
+        }
+        #btn:hover{
+            color: rgb(255, 255, 255);
+            background: #ff0000;
+            transition: .5s;
+        }
+        #btn:active{
+            font-size: 1.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="bg">
+        <audio id="joy" hidden loop src="joy.mp3"></audio>
+        <audio id="sad" hidden loop src="sad.mp3"></audio>
+        <audio id="cry" hidden loop src="cry.mp3"></audio>
+        <audio id="water" hidden loop src="water.mp3"></audio>
+        <div id="circle">
+            <img id="img" src="deadBody.png">
+        </div>
+        <p id="text">বাং<span id="hint">লা</span>দে<span id="hint">শ</span></p>
+        <br><br>
+        <a onclick="btnClick()" id="btn">Reveal</a>
+    </div>
+
+    <script>
+        var index = 0;
+        var bg = document.getElementById("bg");
+        var circle = document.getElementById("circle");
+        var img = document.getElementById("img");
+        var span = document.querySelectorAll('#hint');
+        var text = document.getElementById("text");
+        var btn = document.getElementById("btn");
+        //Audio section
+        var joy = document.getElementById('joy');
+        var sad = document.getElementById('sad');
+        var cry = document.getElementById('cry');
+        var water = document.getElementById('water');
+        
+        window.onload = function() {
+            joy.play();
+        };
+
+        function refreshPage() {
+            document.body.classList.add('fade-out');
+            setTimeout(function() {
+                location.reload();
+            }, 500);
+        }
+        
+        function btnClick(){
+            if (index == 0) {
+                index = 1;
+                joy.pause();
+                sad.play();
+                sad.volume = 0.4;
+                cry.play();
+                cry.volume = 0.4;
+                water.play();
+                water.volume = 0.2;
+                btn.innerText = "Go Back";
+                bg.style.background = "#111";
+                img.style.opacity = "1";
+                circle.style.border = "2px solid #fff";
+                circle.style.boxShadow = "0 0 8px #fff";
+                text.style.color = "#111";
+                span.forEach(element => {
+                    element.style.color = 'red';
+                });
+                setTimeout(() => {
+                    text.innerHTML = "<span style='color:red;'>লাশ</span>";
+                }, 2500);
+            }
+            else{
+                refreshPage();
+            }
+
+        }
+
+    </script>
+</body>
+</html>
